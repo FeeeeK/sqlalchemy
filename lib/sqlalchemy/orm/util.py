@@ -49,6 +49,7 @@ from .base import DynamicMapped
 from .base import InspectionAttr as InspectionAttr
 from .base import instance_str as instance_str  # noqa: F401
 from .base import Mapped
+from .base import NoLoadMapped
 from .base import object_mapper as object_mapper
 from .base import object_state as object_state  # noqa: F401
 from .base import opt_manager_of_class
@@ -146,6 +147,7 @@ _de_stringify_partial = functools.partial(
             "Mapped": Mapped,
             "WriteOnlyMapped": WriteOnlyMapped,
             "DynamicMapped": DynamicMapped,
+            "NoLoadMapped": NoLoadMapped,
         }
     ),
 )

@@ -993,3 +993,48 @@ class WriteOnlyMapped(_MappedAnnotationBase[_T_co]):
             self, instance: Any, value: typing.Collection[_T_co]
         ) -> None:
             ...
+
+
+class NoLoadMapped(_MappedAnnotationBase[_T_co]):
+    """Represent the ORM mapped attribute type for a "noload" relationship.
+
+    The :class:`_orm.NoLoadMapped` type annotation may be used in an
+    :ref:`Annotated Declarative Table <orm_declarative_mapped_column>` mapping
+    to indicate that the ``lazy="noload"`` loader strategy should be used
+    for a particular :func:`_orm.relationship`.
+
+    E.g.::
+
+        class User(Base):
+            __tablename__ = "user"
+            id: Mapped[int] = mapped_column(primary_key=True)
+            addresses: NoLoadMapped[Address] = relationship(
+                cascade="all,delete-orphan"
+            )
+    """
+
+    __slots__ = ()
+
+    if TYPE_CHECKING:
+
+        @overload
+        def __get__(
+            self, instance: None, owner: Any
+        ) -> InstrumentedAttribute[_T_co]:
+            ...
+
+        @overload
+        def __get__(
+            self, instance: object, owner: Any
+        ) -> AppenderQuery[_T_co]:
+            ...
+
+        def __get__(
+            self, instance: Optional[object], owner: Any
+        ) -> Union[InstrumentedAttribute[_T_co], AppenderQuery[_T_co]]:
+            ...
+
+        def __set__(
+            self, instance: Any, value: typing.Collection[_T_co]
+        ) -> None:
+            ...

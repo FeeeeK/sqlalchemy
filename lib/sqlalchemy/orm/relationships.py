@@ -50,6 +50,7 @@ from .base import _is_mapped_class
 from .base import class_mapper
 from .base import DynamicMapped
 from .base import LoaderCallableStatus
+from .base import NoLoadMapped
 from .base import PassiveFlag
 from .base import state_str
 from .base import WriteOnlyMapped
@@ -1762,6 +1763,13 @@ class RelationshipProperty(
             self.lazy = "dynamic"
             self.strategy_key = (("lazy", self.lazy),)
 
+        is_noload = mapped_container is not None and issubclass(
+            mapped_container, NoLoadMapped
+        )
+        if is_noload:
+            self.lazy = "noload"
+            self.strategy_key = (("lazy", self.lazy),)
+
         argument = de_optionalize_union_types(argument)
 
         if hasattr(argument, "__origin__"):
@@ -3447,6 +3455,7 @@ class Relationship(  # type: ignore
     _DeclarativeMapped[_T],
     WriteOnlyMapped[_T],  # not compatible with Mapped[_T]
     DynamicMapped[_T],  # not compatible with Mapped[_T]
+    NoLoadMapped[_T],  # not compatible with Mapped[_T]
 ):
     """Describes an object property that holds a single item or list
     of items that correspond to a related database table.

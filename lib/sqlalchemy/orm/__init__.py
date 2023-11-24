@@ -47,6 +47,7 @@ from .base import DynamicMapped as DynamicMapped
 from .base import InspectionAttrExtensionType as InspectionAttrExtensionType
 from .base import LoaderCallableStatus as LoaderCallableStatus
 from .base import Mapped as Mapped
+from .base import NoLoadMapped as NoLoadMapped
 from .base import NotExtension as NotExtension
 from .base import ORMDescriptor as ORMDescriptor
 from .base import PassiveFlag as PassiveFlag
